@@ -31,18 +31,18 @@ export default class Post extends Entity {
     body: string
 
     @Column()
-    subname:string
+    subname: string
 
     @Column()
-    username:string
+    username: string
 
     @ManyToOne(()=> User, user => user.posts)
     @JoinColumn({ name: 'username', referencedColumnName: 'username'})
-    user: User;
+    user: User
     
-    @ManyToOne(()=> Sub, sub => sub .posts)
+    @ManyToOne(()=> Sub, sub => sub.posts)
     @JoinColumn({ name: 'subname', referencedColumnName: 'name'})
-    sub: Sub;
+    sub: Sub
 
     @Exclude()
     @OneToMany(()=> Comment, (comment)=> comment.post)
