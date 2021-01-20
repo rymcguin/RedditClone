@@ -27,6 +27,7 @@ app.use(cors({
     origin: process.env.ORIGIN,
     optionsSuccessStatus:200,
 }))
+app.use(express.static('public'))
 
 
 
