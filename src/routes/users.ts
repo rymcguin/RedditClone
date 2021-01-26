@@ -4,6 +4,7 @@ import Post from '../entities/Post'
 import User from '../entities/User'
 
 import user from '../middleware/user'
+
 const getUserSubmissions = async (req: Request, res: Response) => {
     try {
         const user = await User.findOneOrFail({
@@ -28,8 +29,8 @@ const getUserSubmissions = async (req: Request, res: Response) => {
 
         let submissions:any[] =[]
 
-        posts.forEach(p=>submissions.push({type:'Post', ...p.toJSON}))
-        comments.forEach(c=>submissions.push({type:'Comment', ...c.toJSON}))
+        posts.forEach(p=>submissions.push({type:'Post', ...p.toJSON()}))
+        comments.forEach(c=>submissions.push({type:'Comment', ...c.toJSON()}))
 
         submissions.sort((a,b) => {
             if(b.createdAt > a.createdAt) return 1
@@ -39,10 +40,13 @@ const getUserSubmissions = async (req: Request, res: Response) => {
 
         return res.json({user, submissions})
     } catch (err) {
-        
+        console.log(err)
+        return res.status(500).json({error: 'Something went wrong'})
     }
 }
 
 const router = Router()
 
 router.get('/:username', user, getUserSubmissions)
+
+export default router
